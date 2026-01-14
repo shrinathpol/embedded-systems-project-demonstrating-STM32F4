@@ -26,12 +26,12 @@ A professional-grade embedded systems project implementing a complete real-time 
 
 ```
 Hardware Trigger Chain:
-┌─────────────────┐
-│  Timer (TIM2)   │ ← Oscillates at 100 Hz
-│  @ 10 kHz ÷ 100 │
-└────────┬────────┘
-         │ TRGO Output Event
-         ▼
+     ┌─────────────────┐
+     │  Timer (TIM2)   │ ← Oscillates at 100 Hz
+     │  @ 10 kHz ÷ 100 │
+     └───────┬─────────┘
+             │ TRGO Output Event
+             ▼
     ┌─────────────────────┐
     │  ADC1 Conversion    │ ← Triggered on rising edge
     │  Channel 0 (PA0)    │
