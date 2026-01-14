@@ -4,7 +4,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "stm32f4xx.h"
-#include "../config.h"
+#include "config.h"
 
 /* ============================================
    ADC Status Enumeration

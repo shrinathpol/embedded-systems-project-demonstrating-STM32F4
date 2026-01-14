@@ -3,7 +3,7 @@
 
 #include <stdint.h>
 #include <stdbool.h>
-#include "../config.h"
+#include "config.h"
 
 /* ============================================
    Ring Buffer (Circular Buffer) Structure
