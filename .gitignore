@@ -1,0 +1,73 @@
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+.vscode/
+.vscode/.c_cpp_properties.json
+.vscode/extensions.json
+.vscode/settings.json
+.vscode/.browse.c_cpp.db*
+.vscode/launch.json
+.vscode/ipch
+
+# Build artifacts
+build/
+dist/
+*.o
+*.a
+*.lib
+*.so
+*.dll
+*.dylib
+*.exe
+*.out
+
+# IDE and Editor
+.idea/
+.settings/
+*.sublime-project
+*.sublime-workspace
+*.swp
+*.swo
+*~
+.DS_Store
+*.swn
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+env/
+venv/
+ENV/
+*.egg-info/
+
+# Debugging
+*.gdb
+.gdbinit
+debug.log
+
+# Temporary files
+*.tmp
+*.bak
+*.orig
+*.rej
+
+# Firmware images
+*.elf
+*.bin
+*.hex
+*.map
+
+# STM32CubeMX
+STM32CubeMX/
+*.ioc
+
+# SEGGER
+SEGGER/
+*.jlink
+
+# Misc
+*.log
+core
