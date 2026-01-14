@@ -310,7 +310,7 @@ Timer (100 Hz) → ADC Trigger → ADC Conversion → DMA Transfer → Interrupt
 - Bit 11: CIRC (Circular mode)
 - Bit 13: MSIZE (Memory size = 16-bit)
 
-  ### Expected Output
+### Expected Output
 ```
 ADC:    0 | Volts: 0.000 V
 ADC:  205 | Volts: 0.165 V
