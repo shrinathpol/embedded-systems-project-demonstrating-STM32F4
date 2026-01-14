@@ -1,103 +1,254 @@
-# STM32 ADC with DMA Project
+# 🔧 STM32F4 Data Acquisition System
 
-An embedded systems project demonstrating STM32F4 (BlackPill) microcontroller capabilities with analog-to-digital conversion (ADC), direct memory access (DMA), timer-based sampling, and UART communication.
+![Status](https://img.shields.io/badge/Status-Active-green)
+![Language](https://img.shields.io/badge/Language-C-blue)
+![Platform](https://img.shields.io/badge/Platform-STM32F411CE-red)
+![License](https://img.shields.io/badge/License-MIT-green)
 
-## Project Overview
+> A embedded systems project demonstrating real-time analog data acquisition on STM32F4 microcontroller with DMA-based efficiency and modular architecture.
 
-This project implements a complete data acquisition system using the STM32F411CE microcontroller on a BlackPill development board. It samples an analog input (potentiometer/sensor) at regular intervals using a timer-triggered ADC with DMA, converts the readings to voltage values, and transmits the results via UART.
+## 📋 Overview
 
-## Hardware Configuration
+This project implements a **complete data acquisition system** featuring:
 
-### Hardware Map
-- **PA0** - Analog Input (Potentiometer/Sensor)
-- **PA9** - UART TX (Connect to RX of USB-TTL converter)
-- **PC13** - Onboard LED (Visual heartbeat indicator)
+- **Hardware-triggered ADC sampling** at 100 Hz with timer control
+- **DMA-based data transfer** for CPU-efficient operation
+- **Professional modular architecture** with clear separation of concerns
+- **Real-time UART communication** for live data monitoring
+- **Comprehensive error handling** and status tracking
+- **Circular buffering** for data storage and retrieval
 
-### Board
-- **MCU**: STM32F411CE (BlackPill)
-- **Clock**: 16 MHz HSI (default)
-- **UART Baud Rate**: 115200
+### Key Metrics
+| Parameter | Value |
+|-----------|-------|
+| **Sampling Rate** | 100 Hz |
+| **ADC Resolution** | 12-bit (0-4095 counts) |
+| **Voltage Range** | 0 - 3.3V |
+| **UART Baud** | 115200 bps |
+| **CPU Clock** | 16 MHz HSI |
 
-## Features
+## 🔌 Hardware Configuration
 
-- **Timer-Based Sampling** - TIM2 triggers ADC conversions at regular intervals
-- **DMA Transfer** - Direct memory access for efficient data transfer without CPU intervention
-- **ADC Conversion** - 12-bit ADC with 3.3V reference
-- **Voltage Calculation** - Integer-based math (no floating point) for efficiency
-- **UART Communication** - Real-time data logging via serial interface
-- **Interrupt-Driven** - Efficient use of hardware interrupts and DMA callbacks
+### Pin Assignment
+```
+┌─────────────────────────────────────────┐
+│         STM32F411CE (BlackPill)         │
+├─────────────────────────────────────────┤
+│ PA0   → Analog Input (ADC Channel 0)    │ ← Sensor/Potentiometer
+│ PA9   → UART TX (Serial Output)         │ ← USB-TTL Converter
+│ PC13  → LED Output (Status Indicator)   │ ← Visual Feedback
+└─────────────────────────────────────────┘
+```
 
-## Folder Structure
+### Board Specifications
+```
+MCU         : STM32F411CE (ARM Cortex-M4)
+Flash       : 512 KB
+SRAM        : 128 KB  
+Clock       : 16 MHz HSI (default, internal)
+ADC         : 12-bit resolution, 1 MSPS
+DMA         : 2 controllers, 8 channels total
+UART        : 6 UART/USART channels
+Timers      : Multiple 32-bit & 16-bit timers
+```
 
--   `src/main.c`: The main application firmware with ADC/DMA/Timer/UART implementations
--   `include/`: Header files
--   `lib/`: Project-specific libraries
--   `test/`: Test files
--   `platformio.ini`: PlatformIO project configuration file
+## ✨ Features & Capabilities
 
-## Getting Started
+### Core Features
+| Feature | Description | Benefit |
+|---------|-------------|---------|
+| **Timer-Triggered Sampling** | TIM2 @ 100 Hz | Precise, consistent timing |
+| **DMA Transfer** | Zero CPU overhead | Efficient data movement |
+| **12-bit ADC** | 0-4095 resolution | Good precision |
+| **Integer Math** | No floating-point | Faster, smaller code |
+| **UART Output** | Real-time streaming | Live data monitoring |
+| **Interrupt Driven** | Hardware callbacks | Low latency |
 
-1.  Clone or open this repository
-2.  Open the project in Visual Studio Code with the PlatformIO IDE extension installed
-3.  The dependencies should be installed automatically
+### Advanced Capabilities (Phase 2+)
+- 🔄 Multi-channel ADC support
+- 💾 Data logging to flash memory
+- ⚙️ ADC calibration routines
+- 📊 Min/Max/Average statistics
+- ⌨️ UART command interface
+- 🔍 CRC error detection
+- ⏱️ Watchdog timer
+- 💤 Low-power modes
 
-## Building and Uploading
+## 📁 Project Structure
 
-### Build
+```
+STM32/
+│
+├── 📂 src/                          # Source code
+│   ├── main.c                       # Application entry point
+│   ├── 📂 core/                     # Core drivers
+│   │   ├── adc.c/h                  # ADC driver
+│   │   ├── dma.c/h                  # DMA configuration
+│   │   ├── timer.c/h                # Timer control
+│   │   └── uart.c/h                 # Serial communication
+│   ├── 📂 drivers/                  # Utility drivers
+│   │   ├── buffer.c/h               # Ring buffer implementation
+│   │   ├── crc.c/h                  # Error detection
+│   │   └── sensors.c/h              # Sensor utilities
+│   ├── 📂 middleware/               # High-level features
+│   │   ├── command.c/h              # Command parser
+│   │   ├── logger.c/h               # Data logging
+│   │   └── calibration.c/h          # Calibration
+│   └── 📂 utils/                    # System utilities
+│       ├── error.c/h                # Error handling
+│       ├── watchdog.c/h             # Watchdog timer
+│       └── stats.c/h                # Statistics
+│
+├── 📂 include/                      # Header files (mirror structure)
+│   ├── config.h                     # Centralized configuration
+│   ├── 📂 core/, drivers/, etc.
+│
+├── 📂 docs/                         # Documentation
+│   ├── ARCHITECTURE.md              # System design & diagrams
+│   ├── API.md                       # Complete API reference
+│   └── EXAMPLES.md                  # Usage examples
+│
+├── 📂 test/                         # Unit tests
+│   ├── test_adc.c
+│   ├── test_buffer.c
+│   └── test_crc.c
+│
+├── 📄 README.md                     # This file
+├── 📄 STRUCTURE_GUIDE.md            # Folder organization guide
+├── 📄 FEATURE_ROADMAP.md            # Development roadmap
+├── 📄 IMPLEMENTATION_STATUS.md      # Progress tracking
+├── 📄 GIT_WORKFLOW.md               # Git usage guide
+├── 📄 platformio.ini                # PlatformIO config
+├── 📄 .gitignore                    # Git ignore rules
+└── 📄 .gitattributes                # Git attributes
+
+```
+
+### Module Responsibilities
+- **Core**: Low-level hardware drivers (ADC, DMA, Timer, UART)
+- **Drivers**: Reusable utility modules (Buffer, CRC, Sensors)
+- **Middleware**: High-level features (Commands, Logging, Calibration)
+- **Utils**: System utilities (Error, Watchdog, Statistics)
+
+## 🚀 Quick Start
+
+### Prerequisites
+- ✅ VS Code with PlatformIO extension
+- ✅ STM32F411CE BlackPill board
+- ✅ ST-Link V2 debugger
+- ✅ USB-TTL serial converter (for monitoring)
+
+### Setup & Build
+
 ```bash
+# 1. Clone repository
+git clone https://github.com/shrinathpol/embedded-systems-project-demonstrating-STM32F4.git
+cd STM32
+
+# 2. Build project
 pio run -e blackpill_f411ce
-```
 
-### Upload
-```bash
+# 3. Upload to board
 pio run -e blackpill_f411ce --target upload
-```
 
-Or use the "PlatformIO: Build" and "PlatformIO: Upload" commands in VS Code.
-
-### Monitor Serial Output
-```bash
+# 4. Monitor serial output
 pio device monitor --speed 115200
 ```
 
-## How It Works
-
-1. **Initialization** - Configures GPIO, DMA, ADC, Timer, and UART
-2. **Timer Trigger** - TIM2 generates periodic triggers to start ADC conversions
-3. **ADC Sampling** - ADC converts analog input on PA0 to digital value (0-4095)
-4. **DMA Transfer** - DMA automatically transfers ADC result to memory and raises an interrupt
-5. **Data Processing** - Main loop converts ADC value to voltage and transmits via UART
-6. **LED Indicator** - PC13 LED provides visual feedback
-
-## Data Format
-
-ADC values are converted to millivolts using the formula:
+### Expected Output
 ```
-Voltage(mV) = (ADC_Value × 3300) / 4095
+ADC:    0 | Volts: 0.000 V
+ADC:  205 | Volts: 0.165 V
+ADC:  410 | Volts: 0.330 V
+ADC:  615 | Volts: 0.496 V
+ADC:  820 | Volts: 0.661 V
+ADC: 1024 | Volts: 0.826 V
 ```
 
-Results are transmitted via UART in a human-readable format for monitoring and analysis.
+## 🔄 Data Pipeline
 
-## Configuration
+```
+┌──────────────┐
+│  Timer (TIM2)│  ← Oscillates at 100 Hz
+└──────┬───────┘
+       │ TRGO event
+       ▼
+┌──────────────────┐
+│  ADC1 Trigger    │  ← Rising edge detection
+└──────┬───────────┘
+       │
+       ▼
+┌──────────────────────┐
+│  ADC Conversion      │  ← 12-bit conversion
+│  PA0 → 0-4095       │
+└──────┬───────────────┘
+       │
+       ▼
+┌──────────────────────────┐
+│  DMA2 Stream 0           │  ← Zero-CPU transfer
+│  ADC→DR → RAM           │
+└──────┬───────────────────┘
+       │ Transfer Complete
+       ▼
+┌──────────────────────────┐
+│  DMA Interrupt Handler   │  ← Set completion flag
+│  ISR → Main Loop         │
+└──────┬───────────────────┘
+       │
+       ▼
+┌──────────────────────────┐
+│  Data Processing         │  ← Convert to voltage
+│  Format & Transmit       │
+└──────┬───────────────────┘
+       │
+       ▼
+┌──────────────────────────┐
+│  UART Output             │  ← Real-time monitor
+│  "ADC: xxxx | Volts: x.x"│
+└──────────────────────────┘
+```
 
-### Timer Sampling Rate
-Edit `src/main.c` to modify the timer configuration for different sampling rates.
+## ⚙️ Configuration & Customization
 
-### UART Settings
-- **Baud Rate**: 115200 (configured in main.c)
-- **Data Bits**: 8
-- **Stop Bits**: 1
-- **Parity**: None
+### Key Settings (`include/config.h`)
 
-### Analog Reference
-- **Reference Voltage**: 3.3V
-- **ADC Resolution**: 12-bit (0-4095 LSBs)
+```c
+/* ADC Configuration */
+#define ADC_SAMPLE_RATE_HZ 100      // Change sampling frequency
+#define ADC_REFERENCE_MV 3300       // Voltage reference
+#define ADC_RESOLUTION 12           // Bit resolution
 
-## Debugging
+/* Timer Configuration */  
+#define TIM2_PRESCALER (1600 - 1)   // Frequency divider
+#define TIM2_PERIOD (100 - 1)       // Determines sample rate
 
-Use ST-Link V2 debugger with PlatformIO:
-```bash
-pio debug -e blackpill_f411ce
+/* UART Configuration */
+#define UART_BAUDRATE 115200        // Serial speed
+#define UART_BUFFER_SIZE 256        // TX/RX buffer
+
+/* Feature Flags */
+#define ENABLE_WATCHDOG 0           // Watchdog timer
+#define ENABLE_ERROR_HANDLING 1     // Error detection
+#define ENABLE_LOGGING 0            // Flash logging
+#define ENABLE_CALIBRATION 0        // ADC calibration
+#define ENABLE_STATISTICS 0         // Stats calculation
+```
+
+### Voltage Conversion Formula
+
+```
+Voltage(mV) = (ADC_Raw × Reference_mV) / Max_Counts
+            = (ADC_Raw × 3300) / 4095
+            = (ADC_Raw * 806) / 1000  // Optimized integer math
+```
+
+### Frequency Calculation
+
+```
+Clock Frequency    = 16 MHz (HSI)
+After Prescale     = 16 MHz / 1600 = 10 kHz
+Sample Rate        = 10 kHz / 100 = 100 Hz
+Sample Period      = 10 ms
 ```
 
 ## Hardware Requirements
