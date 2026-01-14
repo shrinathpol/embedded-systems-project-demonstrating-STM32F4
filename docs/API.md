@@ -321,5 +321,3 @@ if (error_is_critical()) {
 ```
 
 ---
-
-*Last Updated: January 14, 2026*

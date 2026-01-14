@@ -148,67 +148,6 @@ Time →
          (Loop back)
 ```
 
-## Memory Management
-
-```
-STM32F411CE Memory Map
-┌─────────────────────────────────────┐  0x00000000
-│  Flash Memory (512 KB)              │
-│  ├─ Vector Table (0x200)            │
-│  ├─ Code & Constants (~20 KB)       │
-│  ├─ Read-Only Data                  │
-│  └─ Available (~472 KB)             │
-├─────────────────────────────────────┤  0x20000000
-│  SRAM (128 KB)                      │
-│  ├─ .bss (uninitialized data)       │
-│  ├─ .data (initialized data)        │
-│  ├─ Buffers (ADC, UART, Log) ~6KB   │
-│  ├─ Stack (grows down) ~2KB         │
-│  └─ Heap (grows up) ~1KB            │
-├─────────────────────────────────────┤
-│  Peripheral Registers               │
-│  └─ GPIO, ADC, DMA, UART, etc.      │
-└─────────────────────────────────────┘
-```
-
-## Compilation Process
-
-```
-┌─────────────────────┐
-│  Source Files       │
-│  ├─ src/core/*.c    │
-│  ├─ src/drivers/*.c │
-│  ├─ src/utils/*.c   │
-│  └─ src/main.c      │
-└──────────┬──────────┘
-           │
-           ▼ (Compile)
-┌─────────────────────┐
-│  Object Files       │
-│  ├─ core/*.o        │
-│  ├─ drivers/*.o     │
-│  └─ utils/*.o       │
-└──────────┬──────────┘
-           │
-           ▼ (Link with STM32 HAL)
-┌─────────────────────┐
-│  Executable         │
-│  └─ firmware.elf    │
-└──────────┬──────────┘
-           │
-           ▼ (Convert format)
-┌─────────────────────┐
-│  Binary Image       │
-│  └─ firmware.bin    │
-└──────────┬──────────┘
-           │
-           ▼ (Upload)
-┌─────────────────────┐
-│  STM32 Flash        │
-│  └─ Running!        │
-└─────────────────────┘
-```
-
 ## Interrupt Priority Table
 
 | Priority | IRQ | Source | Module | Purpose |
@@ -241,6 +180,3 @@ All configurable parameters in one place!
 ```
 
 ---
-
-*Last Updated: January 14, 2026*
-*Architecture Version: 2.0 (Modular)*
