@@ -30,14 +30,14 @@ Hardware Trigger Chain:
      │  Timer (TIM2)   │ ← Oscillates at 100 Hz
      │  @ 10 kHz ÷ 100 │
      └───────┬─────────┘
-             │ TRGO Output Event
+             │  TRGO Output Event
              ▼
     ┌─────────────────────┐
     │  ADC1 Conversion    │ ← Triggered on rising edge
     │  Channel 0 (PA0)    │
     │  12-bit Resolution  │
     └────────┬────────────┘
-             │ Conversion Complete
+             │  Conversion Complete
              ▼
     ┌─────────────────────┐
     │  DMA2 Stream 0      │ ← Automatic data transfer
